@@ -1,0 +1,101 @@
+/* 全域重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    
+    /* 👇 這裡替換成了你的 Sakuna 背景圖 👇 */
+    /* 前面的 linear-gradient 是半透明遮罩，用來壓暗背景讓時鐘更清楚 */
+    background: linear-gradient(rgba(15, 32, 39, 0.6), rgba(44, 83, 100, 0.7)), 
+                url('images/IMG_0693\ \(1\).png') no-repeat center center;
+    background-size: cover;      /* 讓圖片填滿整個畫面 */
+    background-attachment: fixed; /* 讓背景固定，滑動時不會跑掉 */
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+}
+
+/* 時鐘卡片（毛玻璃效果） */
+.clock-container {
+    /* 調整透明度，讓背景圖能隱約透出來 */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 30px;
+    padding: 40px 60px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+}
+
+/* 數字時間顯示 */
+#clock {
+    font-size: 4.5rem;
+    font-weight: 700;
+    letter-spacing: 6px;
+    background: linear-gradient(to right, #f7ff00, #db36a4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 30px rgba(219, 54, 164, 0.3);
+    font-variant-numeric: tabular-nums;
+}
+
+/* 日期顯示 */
+.date-display {
+    margin-top: 15px;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* 加深陰影，避免和背景文字重疊看不清 */
+    opacity: 0.95;
+}
+
+/* 秒數進度條 */
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+#secondBar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, #f7ff00, #db36a4);
+    transition: width 0.2s linear;
+}
+
+/* 底部文字 */
+.timezone-label {
+    margin-top: 12px;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 小螢幕 (手機) 適配 */
+@media (max-width: 600px) {
+    #clock {
+        font-size: 2.8rem;
+        letter-spacing: 3px;
+    }
+    .clock-container {
+        padding: 25px 30px;
+    }
+    .date-display {
+        font-size: 1rem;
+    }
+}

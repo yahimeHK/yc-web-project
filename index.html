@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=
-    , initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>即時時鐘</title>
+    <!-- 連結外部 CSS 樣式檔 -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    testing web site 
+    <main class="clock-container">
+        <div id="clock" aria-live="off">00:00:00</div>
+        <div class="date-display" id="dateDisplay">載入中...</div>
+        <div class="progress-bar">
+            <div id="secondBar"></div>
+        </div>
+        <div class="timezone-label">本地時間</div>
+    </main>
+
+    <!-- 連結外部 JavaScript 程式檔 -->
+    <script src="clock.js"></script>
 </body>
 </html>
