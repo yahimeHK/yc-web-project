@@ -25,6 +25,8 @@
   --bg-0: #04060c;
   --bg-1: #0a1324;
   --page-bg:
+    linear-gradient(rgba(4, 6, 12, 0.58), rgba(4, 6, 12, 0.86)),
+    url("images/IMG_0693 (1).png") center / cover no-repeat,
     radial-gradient(1100px 680px at 12% -14%, rgba(34, 211, 238, 0.18), transparent 62%),
     radial-gradient(900px 560px at 104% -6%, rgba(168, 85, 247, 0.16), transparent 58%),
     radial-gradient(820px 620px at 50% 120%, rgba(37, 99, 235, 0.16), transparent 64%),
@@ -70,6 +72,8 @@
   --bg-0: #f7faff;
   --bg-1: #e7edf8;
   --page-bg:
+    linear-gradient(rgba(247, 250, 255, 0.82), rgba(231, 237, 248, 0.92)),
+    url("images/IMG_0693 (1).png") center / cover no-repeat,
     radial-gradient(1000px 640px at 10% -16%, rgba(14, 165, 233, 0.14), transparent 60%),
     radial-gradient(880px 540px at 102% -4%, rgba(99, 102, 241, 0.12), transparent 58%),
     radial-gradient(760px 560px at 50% 118%, rgba(45, 212, 191, 0.13), transparent 62%),
@@ -121,8 +125,8 @@ body {
   place-items: safe center; /* 視窗太矮時不會把卡片頂部裁掉 */
   font-family: var(--font-sans);
   color: var(--text);
+  background: var(--page-bg);
   background-color: var(--bg-0);
-  background-image: var(--page-bg);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
