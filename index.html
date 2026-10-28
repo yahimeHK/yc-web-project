@@ -1,23 +1,61 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>即時時鐘</title>
-    <!-- 連結外部 CSS 樣式檔 -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="網上實時時鐘：12 小時制時間、日期與時區，支援繁中、English、日本語、한국어。">
+  <title>網上實時時鐘</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main class="clock-container">
-        <div id="clock" aria-live="off">00:00:00</div>
-        <div class="date-display" id="dateDisplay">載入中...</div>
-        <div class="progress-bar">
-            <div id="secondBar"></div>
-        </div>
-        <div class="timezone-label">本地時間</div>
-    </main>
 
-    <!-- 連結外部 JavaScript 程式檔 -->
-    <script src="clock.js"></script>
+  <div class="app">
+    <header class="site-header">
+      <h1 class="site-title" id="siteTitle">網上實時時鐘</h1>
+      <p class="site-subtitle" id="siteSubtitle">實時顯示香港時間</p>
+    </header>
+
+    <div class="controls" id="controls" role="group" aria-label="顯示選項">
+      <label class="control">
+        <span class="control-label" id="langLabel">語言</span>
+        <select id="langSelect">
+          <option value="zh">繁中</option>
+          <option value="en">EN</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+        </select>
+      </label>
+
+      <label class="control">
+        <span class="control-label" id="zoneLabel">時區</span>
+        <select id="zoneSelect"></select>
+      </label>
+
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="true" title="切換主題">
+        <span class="theme-icon" id="themeIcon" aria-hidden="true">🌙</span>
+        <span class="theme-text" id="themeText">深色霓虹</span>
+      </button>
+    </div>
+
+    <main class="clock-card">
+      <p class="clock-time">
+        <span class="clock-period" id="clockPeriod">下午</span>
+        <span class="clock-digits" id="clockDigits">—:—:—</span>
+      </p>
+      <p class="clock-date" id="clockDate">—年—月—日</p>
+      <p class="clock-zone" id="clockZone">GMT+8 香港</p>
+
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-bar" id="secondBar"></div>
+      </div>
+    </main>
+  </div>
+
+  <noscript>
+    <p class="noscript">此頁需要 JavaScript 才能顯示實時時間。</p>
+  </noscript>
+
+  <script src="clock.js"></script>
 </body>
 </html>

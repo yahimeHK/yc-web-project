@@ -1,101 +1,501 @@
-/* 全域重置 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ==========================================================================
+   網上實時時鐘 — 樣式表
+   深色霓虹（預設）／淺色 雙主題，手機優先的響應式版面
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --font-sans: "Segoe UI", "PingFang HK", "PingFang TC", "Microsoft JhengHei",
+    "Noto Sans TC", "Noto Sans KR", "Hiragino Sans", system-ui, -apple-system,
+    sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   1. 主題色彩
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-0: #04060c;
+  --bg-1: #0a1324;
+  --page-bg:
+    radial-gradient(1100px 680px at 12% -14%, rgba(34, 211, 238, 0.18), transparent 62%),
+    radial-gradient(900px 560px at 104% -6%, rgba(168, 85, 247, 0.16), transparent 58%),
+    radial-gradient(820px 620px at 50% 120%, rgba(37, 99, 235, 0.16), transparent 64%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1));
+
+  --text: #e7f6ff;
+  --muted: #8ba4c2;
+
+  --card-bg: rgba(10, 17, 31, 0.72);
+  --card-border: rgba(125, 232, 255, 0.22);
+  --card-shadow:
+    0 42px 90px -42px rgba(34, 211, 238, 0.5),
+    0 12px 32px -22px rgba(2, 6, 23, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --halo: radial-gradient(closest-side, rgba(34, 211, 238, 0.2), transparent 72%);
+
+  --neon-strong: #7ff3ff;
+  --neon-soft: #96e9ff;
+  --glow-strong:
+    0 0 6px rgba(125, 243, 255, 0.9),
+    0 0 20px rgba(34, 211, 238, 0.55),
+    0 0 46px rgba(34, 211, 238, 0.32),
+    0 0 90px rgba(56, 189, 248, 0.18);
+  --glow-soft:
+    0 0 8px rgba(139, 233, 255, 0.55),
+    0 0 24px rgba(34, 211, 238, 0.25);
+  --title-glow: 0 0 26px rgba(34, 211, 238, 0.35);
+
+  --field-bg: rgba(8, 15, 28, 0.78);
+  --field-border: rgba(125, 211, 252, 0.24);
+  --field-text: #d9f2ff;
+  --focus-ring: rgba(103, 232, 249, 0.85);
+  --chevron: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%238ea6c4' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  --track-bg: rgba(127, 243, 255, 0.12);
+  --bar-gradient: linear-gradient(90deg, #22d3ee, #a78bfa);
+  --bar-glow: 0 0 14px rgba(34, 211, 238, 0.65);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-0: #f7faff;
+  --bg-1: #e7edf8;
+  --page-bg:
+    radial-gradient(1000px 640px at 10% -16%, rgba(14, 165, 233, 0.14), transparent 60%),
+    radial-gradient(880px 540px at 102% -4%, rgba(99, 102, 241, 0.12), transparent 58%),
+    radial-gradient(760px 560px at 50% 118%, rgba(45, 212, 191, 0.13), transparent 62%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1));
+
+  --text: #0b1730;
+  --muted: #52627c;
+
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-border: rgba(15, 23, 42, 0.08);
+  --card-shadow:
+    0 32px 72px -36px rgba(15, 23, 42, 0.45),
+    0 2px 8px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --halo: none;
+
+  --neon-strong: #0b6d88;
+  --neon-soft: #155e75;
+  --glow-strong: 0 1px 0 rgba(255, 255, 255, 0.8);
+  --glow-soft: none;
+  --title-glow: none;
+
+  --field-bg: #ffffff;
+  --field-border: rgba(15, 23, 42, 0.16);
+  --field-text: #0b1730;
+  --focus-ring: rgba(14, 116, 144, 0.7);
+  --chevron: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%235a6b85' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  --track-bg: rgba(15, 23, 42, 0.08);
+  --bar-gradient: linear-gradient(90deg, #0e7490, #6d28d9);
+  --bar-glow: none;
+}
+
+/* --------------------------------------------------------------------------
+   2. 頁面基本版面
+   -------------------------------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    
-    /* 👇 這裡替換成了你的 Sakuna 背景圖 👇 */
-    /* 前面的 linear-gradient 是半透明遮罩，用來壓暗背景讓時鐘更清楚 */
-    background: linear-gradient(rgba(15, 32, 39, 0.6), rgba(44, 83, 100, 0.7)), 
-                url('images/IMG_0693\ \(1\).png') no-repeat center center;
-    background-size: cover;      /* 讓圖片填滿整個畫面 */
-    background-attachment: fixed; /* 讓背景固定，滑動時不會跑掉 */
-    
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #fff;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  place-items: safe center; /* 視窗太矮時不會把卡片頂部裁掉 */
+  font-family: var(--font-sans);
+  color: var(--text);
+  background-color: var(--bg-0);
+  background-image: var(--page-bg);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.45s ease, color 0.45s ease;
 }
 
-/* 時鐘卡片（毛玻璃效果） */
-.clock-container {
-    /* 調整透明度，讓背景圖能隱約透出來 */
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 30px;
-    padding: 40px 60px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    text-align: center;
-    max-width: 600px;
-    width: 90%;
+::selection {
+  background: rgba(34, 211, 238, 0.35);
 }
 
-/* 數字時間顯示 */
-#clock {
-    font-size: 4.5rem;
-    font-weight: 700;
-    letter-spacing: 6px;
-    background: linear-gradient(to right, #f7ff00, #db36a4);
+.app {
+  width: 100%;
+  max-width: 780px;
+  padding: clamp(28px, 6vw, 56px) clamp(16px, 4vw, 32px);
+  display: grid;
+  gap: clamp(18px, 3.5vw, 28px);
+}
+
+/* --------------------------------------------------------------------------
+   3. 標題
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  text-align: center;
+}
+
+.site-title {
+  margin: 0;
+  font-size: clamp(1.45rem, 3.6vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-shadow: var(--title-glow);
+}
+
+.site-subtitle {
+  margin: 10px 0 0;
+  font-size: clamp(0.84rem, 2.4vw, 0.98rem);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   4. 控制項：語言、時區、主題
+   -------------------------------------------------------------------------- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 12px 16px;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 10.5rem; /* 容得下「로스앤젤레스」等長城市名 */
+}
+
+.control-label {
+  padding-left: 2px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 44px;
+  width: 100%;
+  padding: 10px 40px 10px 14px;
+  border: 1px solid var(--field-border);
+  border-radius: 12px;
+  background-color: var(--field-bg);
+  background-image: var(--chevron);
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 8px;
+  color: var(--field-text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.3s ease, color 0.3s ease;
+}
+
+select:hover {
+  border-color: var(--focus-ring);
+}
+
+select:focus-visible {
+  outline: none;
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px rgba(103, 232, 249, 0.25);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid var(--field-border);
+  border-radius: 999px;
+  background-color: var(--field-bg);
+  color: var(--field-text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--focus-ring);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:active {
+  transform: translateY(0);
+}
+
+.theme-toggle:focus-visible {
+  outline: none;
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px rgba(103, 232, 249, 0.25);
+}
+
+.theme-icon {
+  font-size: 1.05em;
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   5. 時鐘卡片
+   -------------------------------------------------------------------------- */
+
+.clock-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(26px, 6.5vw, 54px) clamp(18px, 5vw, 44px);
+  border: 1px solid var(--card-border);
+  border-radius: clamp(22px, 4vw, 30px);
+  background-color: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  text-align: center;
+  transition: background-color 0.45s ease, border-color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+/* 卡片頂部的柔光暈 */
+.clock-card::before {
+  content: "";
+  position: absolute;
+  top: -55%;
+  left: 50%;
+  width: min(560px, 120%);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  background-image: var(--halo);
+  pointer-events: none;
+}
+
+.clock-time,
+.clock-date,
+.clock-zone {
+  position: relative;
+  z-index: 1;
+}
+
+/* 第一行：上午／下午 + 時:分:秒 */
+.clock-time {
+  margin: 0 0 clamp(12px, 2.6vw, 18px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.55em;
+}
+
+.clock-period {
+  font-size: clamp(0.95rem, 3.2vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--neon-soft);
+  text-shadow: var(--glow-soft);
+  transition: color 0.45s ease, text-shadow 0.45s ease;
+}
+
+.clock-digits {
+  font-size: clamp(2.7rem, 11.5vw, 5.4rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  color: var(--neon-strong);
+  text-shadow: var(--glow-strong);
+  transition: color 0.45s ease, text-shadow 0.45s ease;
+}
+
+/* 淺色主題沿用舊版的漸變數字；深色主題保留單色霓虹 */
+@supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  :root[data-theme="light"] .clock-digits {
+    background-image: linear-gradient(100deg, #0e7490 10%, #6d28d9 90%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 0 30px rgba(219, 54, 164, 0.3);
-    font-variant-numeric: tabular-nums;
+    text-shadow: none;
+  }
 }
 
-/* 日期顯示 */
-.date-display {
-    margin-top: 15px;
-    font-size: 1.3rem;
-    letter-spacing: 2px;
-    color: #ffffff;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* 加深陰影，避免和背景文字重疊看不清 */
-    opacity: 0.95;
+/* 第二、三行：日期與時區 */
+.clock-date,
+.clock-zone {
+  margin: 0;
+  color: var(--neon-soft);
+  font-variant-numeric: tabular-nums;
+  text-shadow: var(--glow-soft);
+  transition: color 0.45s ease, text-shadow 0.45s ease;
 }
 
-/* 秒數進度條 */
+.clock-date {
+  font-size: clamp(1rem, 3.6vw, 1.32rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.clock-zone {
+  margin-top: clamp(6px, 1.4vw, 10px);
+  font-size: clamp(0.9rem, 3.2vw, 1.1rem);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  opacity: 0.92;
+}
+
+/* 秒數進度條（融合自舊版 clock.js 的 secondBar） */
+.progress-track {
+  position: relative;
+  z-index: 1;
+  width: min(320px, 72%);
+  height: 4px;
+  margin: clamp(14px, 3vw, 20px) auto 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background-color: var(--track-bg);
+}
+
 .progress-bar {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background-image: var(--bar-gradient);
+  box-shadow: var(--bar-glow);
+  transition: width 0.9s linear;
+}
+
+/* --------------------------------------------------------------------------
+   6. 動畫（尊重系統的減少動態設定）
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .app {
+    animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  }
+
+  :root[data-theme="dark"] .clock-digits,
+  :root[data-theme="dark"] .clock-period {
+    animation: neonPulse 5.5s ease-in-out infinite;
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes neonPulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.88;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. 響應式（手機）
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 560px) {
+  body {
+    place-items: start center;
+  }
+
+  .app {
+    padding-top: clamp(28px, 9vw, 44px);
+    padding-bottom: clamp(32px, 10vw, 52px);
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .control {
+    min-width: 0;
+  }
+
+  .theme-toggle {
     width: 100%;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 2px;
-    margin-top: 20px;
-    overflow: hidden;
+  }
+
+  .clock-time {
+    gap: 0.3em;
+  }
+
+  .clock-card {
+    padding-inline: 18px;
+  }
 }
 
-#secondBar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(to right, #f7ff00, #db36a4);
-    transition: width 0.2s linear;
+@media (max-width: 360px) {
+  .clock-time {
+    flex-direction: column;
+    gap: 0.15em;
+  }
 }
 
-/* 底部文字 */
-.timezone-label {
-    margin-top: 12px;
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
-}
+/* --------------------------------------------------------------------------
+   8. 其他
+   -------------------------------------------------------------------------- */
 
-/* 小螢幕 (手機) 適配 */
-@media (max-width: 600px) {
-    #clock {
-        font-size: 2.8rem;
-        letter-spacing: 3px;
-    }
-    .clock-container {
-        padding: 25px 30px;
-    }
-    .date-display {
-        font-size: 1rem;
-    }
+.noscript {
+  position: fixed;
+  right: 16px;
+  bottom: 20px;
+  left: 16px;
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 12px;
+  background: rgba(69, 10, 10, 0.55);
+  color: #fecaca;
+  font-size: 0.9rem;
+  text-align: center;
 }
